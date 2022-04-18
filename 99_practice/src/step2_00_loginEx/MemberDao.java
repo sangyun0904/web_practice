@@ -27,7 +27,6 @@ public class MemberDao {
 			
 			conn = DriverManager.getConnection(url, user, password);
 			
-			return conn;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,12 +43,15 @@ public class MemberDao {
 			pstmt = conn.prepareStatement("SELECT * FROM MEMBER WHERE ID = ?");
 			pstmt.setString(1, memberDto.getId());
 			rs = pstmt.executeQuery();
+
 			
 			if (!rs.next()) {
-				pstmt = conn.prepareStatement("INSERT INTO MEMBER VALUES(?,?,?,NOW()");
+				pstmt = conn.prepareStatement("INSERT INTO MEMBER VALUES(?,?,?,NOW())");
 				pstmt.setString(1, memberDto.getId());
 				pstmt.setString(2, memberDto.getPasswd());
 				pstmt.setString(3, memberDto.getName());
+				pstmt.executeUpdate();
+				isFirstMember = true;
 			}
 			
 		}catch (Exception e) {
@@ -61,5 +63,29 @@ public class MemberDao {
 		}
 		
 		return isFirstMember;
+	}
+	
+	public boolean loginMember(MemberDto memberDto) {
+		boolean isLoggedIn = false;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM MEMBER WHERE ID = ? AND PASSWD = ?");
+			pstmt.setString(1, memberDto.getId());
+			pstmt.setString(2, memberDto.getPasswd());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				isLoggedIn = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {rs.close();} catch (SQLException e) {e.printStackTrace();}
+			try {pstmt.close();} catch (SQLException e) {e.printStackTrace();}
+			try {conn.close();} catch (SQLException e) {e.printStackTrace();}
+		}
+		
+		return isLoggedIn;
 	}
 }

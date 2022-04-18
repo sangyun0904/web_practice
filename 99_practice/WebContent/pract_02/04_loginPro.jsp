@@ -5,27 +5,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>join pro</title>
+<title>LoginPro</title>
 </head>
 <body>
 	<%
 		request.setCharacterEncoding("utf-8");
 	
-		String id = request.getParameter("id");
-		String passwd = request.getParameter("passwd");
-		String name = request.getParameter("name");
-		
 		MemberDto memberDto = new MemberDto();
-		memberDto.setId(id);
-		memberDto.setPasswd(passwd);
-		memberDto.setName(name);
+		memberDto.setId(request.getParameter("id"));
+		memberDto.setPasswd(request.getParameter("passwd"));
 		
-		boolean isMember = MemberDao.getInstance().insertMember(memberDto);
+		boolean isLoggedIn = MemberDao.getInstance().loginMember(memberDto);
 		
-		if (isMember) {
+		if (isLoggedIn) {
+			session.setAttribute("id", request.getParameter("id"));
 	%>
 			<script>
-				alert("Welcome!");
+				alert("You are Logged In");
 				location.href = "00_main.jsp";
 			</script>
 	<%
@@ -33,10 +29,10 @@
 		else {
 	%>
 			<script>
-				alert("Id not available try different id");
+				alert("Check your Id or Password");
 				history.go(-1);
 			</script>
-	<%	
+	<%		
 		}
 	%>
 </body>
