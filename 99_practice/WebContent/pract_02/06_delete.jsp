@@ -10,10 +10,10 @@
 		String id = (String)session.getAttribute("id");
 	%>
 
-	<form action="07_deletePro" method="post">
+	<form action="07_deletePro.jsp" method="post">
 		<fieldset>
 			<legend>Delete Member</legend>
-			<h3 align="center">ID : <%=id %></h3>
+			<h3 align="center">ID : <%=id %><input type="hidden" name="id" value=<%=id %>></h3>
 			<p align="center">Type your password : <input type="password" name="passwd"></p>
 			<p><input type="submit" value="Delete!"></p>
 		</fieldset>

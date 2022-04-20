@@ -20,6 +20,7 @@
 	%>
 			<h3>Welcome! <%=id %></h3>
 			<p><a href="05_logout.jsp">logout</a></p>
+			<p><a href="06_delete.jsp">delete account</a></p>
 	<%
 		}
 	%>

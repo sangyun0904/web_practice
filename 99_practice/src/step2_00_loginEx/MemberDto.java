@@ -32,5 +32,9 @@ public class MemberDto {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	@Override
+	public String toString() {
+		return "MemberDto [id=" + id + ", passwd=" + passwd + ", name=" + name + ", date=" + date + "]";
+	}
 	
 }

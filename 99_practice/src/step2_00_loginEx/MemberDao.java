@@ -88,4 +88,32 @@ public class MemberDao {
 		
 		return isLoggedIn;
 	}
+	
+	public boolean deleteMember(MemberDto memberDto) {
+		boolean isDeleted = false;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM MEMBER WHERE ID = ? AND PASSWD = ?");
+			pstmt.setString(1, memberDto.getId());
+			pstmt.setString(2, memberDto.getPasswd());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				pstmt = conn.prepareStatement("DELETE FROM MEMBER WHERE ID = ?");
+				pstmt.setString(1, memberDto.getId());
+				pstmt.executeUpdate();
+				isDeleted = true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {try {rs.close();} catch (SQLException e) {e.printStackTrace();}}
+			if (pstmt != null) {try {pstmt.close();} catch (SQLException e) {e.printStackTrace();}}
+			if (conn != null) {try {conn.close();} catch (SQLException e) {e.printStackTrace();}}
+		}
+		
+		return isDeleted;
+	}
 }
