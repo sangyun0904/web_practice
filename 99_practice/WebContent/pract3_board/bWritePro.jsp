@@ -21,5 +21,8 @@
 		BoardDao.getInstance().insertBoard(boardDto);
 		
 	%>
+	<script>
+		location.href = "bList.jsp";
+	</script>
 </body>
 </html>

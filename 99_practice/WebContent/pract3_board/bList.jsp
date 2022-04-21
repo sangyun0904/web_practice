@@ -37,7 +37,7 @@
 			}
 	%>
 		<tr>
-			<td colspan="5"><input type="button" value="글쓰기" onclick="location.href = 'bWrite.jsp'"></td>
+			<td colspan="5"><input type="button" value="글쓰기" onclick="location.href='bWrite.jsp'"></td>
 		</tr>
 	</table>
 </body>

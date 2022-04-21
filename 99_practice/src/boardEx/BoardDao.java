@@ -88,6 +88,10 @@ public class BoardDao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {try {pstmt.close();} catch (SQLException e) {}}
+			if (conn != null) {try {conn.close();}  catch (SQLException e) {}}
+			if (rs != null) {try {rs.close();}  catch (SQLException e) {}}
 		}
 		
 		return boardList;
@@ -103,17 +107,23 @@ public class BoardDao {
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			
-			boardDto.setNum(rs.getInt("NUM"));
-			boardDto.setWriter(rs.getString("WRITER"));
-			boardDto.setEmail(rs.getString("EMAIL"));
-			boardDto.setSubject(rs.getString("SUBJECT"));
-			boardDto.setPassword(rs.getString("PASSWORD"));
-			boardDto.setRegDate(rs.getDate("REG_DATE"));
-			boardDto.setReadCount(rs.getInt("READ_COUNT"));
-			boardDto.setContent(rs.getString("CONTENT"));
+			if (rs.next()) {
+				boardDto.setNum(rs.getInt("NUM"));
+				boardDto.setWriter(rs.getString("WRITER"));
+				boardDto.setEmail(rs.getString("EMAIL"));
+				boardDto.setSubject(rs.getString("SUBJECT"));
+				boardDto.setPassword(rs.getString("PASSWORD"));
+				boardDto.setRegDate(rs.getDate("REG_DATE"));
+				boardDto.setReadCount(rs.getInt("READ_COUNT"));
+				boardDto.setContent(rs.getString("CONTENT"));
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {try {pstmt.close();} catch (SQLException e) {}}
+			if (conn != null) {try {conn.close();}  catch (SQLException e) {}}
+			if (rs != null) {try {rs.close();}  catch (SQLException e) {}}
 		}
 		
 		return boardDto;
