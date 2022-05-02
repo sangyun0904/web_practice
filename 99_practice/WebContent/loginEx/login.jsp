@@ -12,6 +12,8 @@
 		<hr>
 		<form action="login" method="post">
 			<p><label>아이디 : <input type="text" name="id" autofocus></label>
+			<p><label>패스워드 : <input type="password" name="pw"></label></p>
+			<input type="submit" value="로그인">
 		</form>
 	</div>
 </body>
